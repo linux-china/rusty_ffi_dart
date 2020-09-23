@@ -7,10 +7,10 @@ import 'dart:io';
 
 // Create a typedef with the FFI type signature of the C function.
 // Commonly used types defined by dart:ffi library include Double, Int32, NativeFunction, Pointer, Struct, Uint8, and Void.
-typedef play_once_func = ffi.Void Function(ffi.Pointer<Utf8>);
+typedef play_once_func = ffi.Pointer<Utf8> Function(ffi.Pointer<Utf8>);
 
 // Create a typedef for the variable that you’ll use when calling the C function.
-typedef PlayOnce = void Function(ffi.Pointer<Utf8>);
+typedef PlayOnce = ffi.Pointer<Utf8> Function(ffi.Pointer<Utf8>);
 
 void main() {
   var currentDir = Directory.current.path;
@@ -38,5 +38,6 @@ void main() {
   final ffi.Pointer<Utf8> song = Utf8.toUtf8('data/music.mp3').cast();
 
   // Call the C function.
-  play_once(song);
+  var result = Utf8.fromUtf8(play_once(song).cast());
+  print(result);
 }
