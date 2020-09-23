@@ -9,10 +9,8 @@ pub extern "C" fn play_once(ptr: *const c_char) -> *const c_char {
     let name = unsafe { CStr::from_ptr(ptr).to_string_lossy().into_owned() };
     //play_music(&name);
     println!("{}", name);
-    unsafe {
-        let c_str = CString::new("Hello").unwrap();
-        c_str.as_ptr() as *const c_char
-    }
+    let result = format!("Hello {}", name);
+    CString::new(result).unwrap().into_raw()
 }
 
 #[allow(dead_code)]
