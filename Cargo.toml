@@ -9,4 +9,3 @@ name = "play_once"
 crate-type = ["cdylib"]
 
 [dependencies]
-rodio = "0.11.0"
