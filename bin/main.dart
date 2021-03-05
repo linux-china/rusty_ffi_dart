@@ -22,7 +22,7 @@ void main() {
   } else if (Platform.isWindows) {
     dylib =
         ffi.DynamicLibrary.open(currentDir + 'target/debug/libplay_once.dll');
-  } else if (Platform.isLinux) {
+  } else {
     dylib =
         ffi.DynamicLibrary.open(currentDir + 'target/debug/libplay_once.so');
   }
@@ -33,11 +33,7 @@ void main() {
       .lookup<ffi.NativeFunction<play_once_func>>('play_once')
       .asFunction();
 
-  // Convert a Dart [String] to a Utf8-encoded null-terminated C string.
-  // ignore: omit_local_variable_types
-  final ffi.Pointer<Utf8> song = Utf8.toUtf8('data/music.mp3').cast();
-
   // Call the C function.
-  var result = Utf8.fromUtf8(play_once(song).cast());
+  var result = play_once("data/music.mp3".toNativeUtf8()).toDartString();
   print(result);
 }
